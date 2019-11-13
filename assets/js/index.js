@@ -196,7 +196,7 @@ window.addEventListener('load', async () => {
 
     meetingsLength = await callStatic('getMeetingsLength', []);
 
-    for (let i = 1; i <= meetingsLength; i++) {
+    for (let i = 0; i <= meetingsLength; i++) {
         const meeting = await callStatic('getMeeting', [i]);
 
         meetings.push({
