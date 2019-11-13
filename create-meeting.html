@@ -33,52 +33,59 @@
             </div>
         </div>
     </nav>
+    <div class="main flex-fill position-relative overflow-auto">
+        <div id="loader"
+            class="align-items-center bg-light d-flex flex-column h-100 justify-content-center position-absolute w-100 loader">
+            <h4 class="mb-2">Loading</h2>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+        </div>
+        <div class="container mb-5">
+            <h1>New Meeting!</h1>
 
-    <div class="container overflow-auto mb-5">
-        <h1>New Meeting!</h1>
-
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Meeting Name">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Meeting Name">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" id="date" placeholder="Date">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="time">Time</label>
+                        <input type="time" class="form-control" id="time" placeholder="16:00">
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="date">Date</label>
-                    <input type="date" class="form-control" id="date" placeholder="Date">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="capacity">Capacity</label>
+                        <input type="number" class="form-control" id="capacity" placeholder="0">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="ticketPrice">Ticket price</label>
+                        <input type="number" class="form-control" id="ticketPrice" placeholder="0 aettos">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="image">Image</label>
+                        <input type="string" class="form-control" id="image" placeholder="http://image.url">
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="time">Time</label>
-                    <input type="time" class="form-control" id="time" placeholder="16:00">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="address1">Address</label>
+                        <input type="text" class="form-control" id="address1" placeholder="1234 Main St">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="address2">Address 2</label>
+                        <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor">
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="capacity">Capacity</label>
-                    <input type="number" class="form-control" id="capacity" placeholder="0">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="capacity">Ticket price</label>
-                    <input type="number" class="form-control" id="tickettPrice" placeholder="0 aettos">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="image">Image</label>
-                    <input type="string" class="form-control" id="image" placeholder="http://image.url">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputAddress2">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2"
-                        placeholder="Apartment, studio, or floor">
-                </div>
-            </div>
-            <button type="submit" id="createBtn" class="btn btn-primary btn-block">Save</button>
-        </form>
+                <button type="submit" id="createBtn" class="btn btn-primary btn-block">Save</button>
+            </form>
+        </div>
     </div>
 
     <!-- footer -->
@@ -108,6 +115,9 @@
     <script src="assets/jquery/jquery-3.3.1.slim.min.js"></script>
     <script src="assets/popper/popper.min.js"></script>
     <script src="assets/bootstrap/bootstrap.min.js"></script>
+
+    <script src="assets/js/index.js"></script>
+
 </body>
 
 </html>

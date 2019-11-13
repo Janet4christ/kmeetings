@@ -1,30 +1,3 @@
-var meetings = [
-    {
-        id          : 1,
-        name        : "primer meetup",
-        date        : "20/12/2019",
-        time        : "06:00 PM",
-        capacity    : 25,
-        ticketPrice : 1,
-        address1    : "Linea uno de la direccion",
-        address2    : "linea dos de la direccion",
-        image       : "https://pbs.twimg.com/media/Dsdt6gOXcAAksLu.jpg",
-        opened      : true
-    },
-    {
-        id          : 2,
-        name        : "segundo meetup",
-        date        : "21/12/2019",
-        time        : "06:00 PM",
-        capacity    : 15,
-        ticketPrice : 1,
-        address1    : "Linea uno de la direccion",
-        address2    : "linea dos de la direccion",
-        image       : "https://pbs.twimg.com/media/C4Vu1S0WYAA3Clw.jpg",
-        opened      : true
-    }
-];
-
 const contractSource = `
 payable contract Meeting =
   // ticket definition
@@ -175,6 +148,8 @@ var client = null;
 var meetings = [];
 var meetingsLength = 0;
 
+console.log('nano');
+
 function renderMeetings() {
     // meetings = meetings.sort(function(a,b){return b.date-a.date})
     var template = $('#template').html();
@@ -270,14 +245,14 @@ jQuery("#meetingBody").on("click", ".toggleStatus", async function(event){
 
 $('#createBtn').click(async function(){
     showLoader();
-    var name = ($('#regName').val()),
-        date = ($('#regUrl').val()),
-        time = ($('#regName').val()),
-        capacity = ($('#regUrl').val()),
-        ticketPrice = ($('#regName').val()),
-        address1 = ($('#regUrl').val()),
-        address2 = ($('#regName').val()),
-        image = ($('#regUrl').val());
+    var name = ($('#name').val()),
+        date = ($('#date').val()),
+        time = ($('#time').val()),
+        capacity = ($('#capacity').val()),
+        ticketPrice = ($('#ticketPrice').val()),
+        address1 = ($('#address1').val()),
+        address2 = ($('#address2').val()),
+        image = ($('#image').val());
   
     const args = [ name, date, time, capacity, ticketPrice, address1, address2, image ];
     await contractSource('createMeeting', args, 0);
