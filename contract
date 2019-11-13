@@ -49,7 +49,7 @@ payable contract Meeting =
   /**
    * get meetings length
    */
-  entrypoint getMeetingLength() = state.meetingsLength
+  entrypoint getMeetingsLength() = state.meetingsLength
   
   
   /**

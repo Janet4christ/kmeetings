@@ -77,7 +77,7 @@ payable contract Meeting =
   /**
    * get meetings length
    */
-  entrypoint getMeetingLength() = state.meetingsLength
+  entrypoint getMeetingsLength() = state.meetingsLength
   
   
   /**
@@ -170,7 +170,7 @@ payable contract Meeting =
     let updatedMeetings = state.meetings{ [meetingId].opened = false }
     put(state{ meetings = updatedMeetings })`;
 
-const contractAddress = 'ct_owrQ64FmfPNSbGpyW35p6ohQU8cf4BemdWCQWhYMu2Gi6LbSN';
+const contractAddress = 'ct_nK62JyqR4ariZHrKpJ2VK85fWHHWUYQU5DiMT3kRdzf21Azou';
 var client = null;
 var meetings = [];
 var meetingsLength = 0;
