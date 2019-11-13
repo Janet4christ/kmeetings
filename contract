@@ -22,7 +22,8 @@ payable contract Meeting =
   
   
   record state = 
-    { meetings : map(int, meeting) }
+    { meetings       : map(int, meeting),
+      meetingsLength : int }
 
 
   // 1, primer meetup, hoy, ahora, 12, 1, imagen, direccion 1, direccion 2d
@@ -33,7 +34,7 @@ payable contract Meeting =
   /**
    * Init method
    */
-  entrypoint init() = { meetings = {} }
+  entrypoint init() = { meetings = {}, meetingsLength = 0 }
 
   
   
@@ -43,6 +44,12 @@ payable contract Meeting =
   entrypoint getMeeting(meetingId: int) : meeting = 
     state.meetings[meetingId]
 
+
+
+  /**
+   * get meetings length
+   */
+  entrypoint getMeetingLength() = state.meetingsLength
   
   
   /**

@@ -50,7 +50,8 @@ payable contract Meeting =
   
   
   record state = 
-    { meetings : map(int, meeting) }
+    { meetings       : map(int, meeting),
+      meetingsLength : int }
 
 
   // 1, primer meetup, hoy, ahora, 12, 1, imagen, direccion 1, direccion 2d
@@ -61,7 +62,7 @@ payable contract Meeting =
   /**
    * Init method
    */
-  entrypoint init() = { meetings = {} }
+  entrypoint init() = { meetings = {}, meetingsLength = 0 }
 
   
   
@@ -71,6 +72,12 @@ payable contract Meeting =
   entrypoint getMeeting(meetingId: int) : meeting = 
     state.meetings[meetingId]
 
+
+
+  /**
+   * get meetings length
+   */
+  entrypoint getMeetingLength() = state.meetingsLength
   
   
   /**
@@ -163,6 +170,11 @@ payable contract Meeting =
     let updatedMeetings = state.meetings{ [meetingId].opened = false }
     put(state{ meetings = updatedMeetings })`;
 
+const contractAddress = 'ct_owrQ64FmfPNSbGpyW35p6ohQU8cf4BemdWCQWhYMu2Gi6LbSN';
+var client = null;
+var meetings = [];
+var meetingsLength = 0;
+
 function renderMeetings() {
     // meetings = meetings.sort(function(a,b){return b.date-a.date})
     var template = $('#template').html();
@@ -172,7 +184,20 @@ function renderMeetings() {
 }
 
 window.addEventListener('load', async () => {
+    $("#loader").show();
+
+    client = await Ae.Aepp();
+
+    const contract = await client.getContractInstance(contractSource, {contractAddress});
+    const calledGet = await contract.call('getMeetingsLength', [], {callStatic: true}).catch(e => console.error(e));
+    console.log('calledGet', calledGet);
+
+    const decodedGet = await calledGet.decode().catch(e => console.error(e));
+    console.log('decodedGet', decodedGet);
+
     renderMeetings();
+
+    $("#loader").hide();
 });
 
 jQuery("#meetingBody").on("click", ".buyBtn", async function(event){
