@@ -183,17 +183,42 @@ function renderMeetings() {
     $('#meetingBody').html(rendered);
 }
 
+async function callStatic(func, args) {
+    const contract = await client.getContractInstance(contractSource, {contractAddress});
+    const calledGet = await contract.call(func, args, {callStatic: true}).catch(e => console.error(e));
+    const decodedGet = await calledGet.decode().catch(e => console.error(e));
+    return decodedGet;
+}
+
+async function contractCall(func, args, value) {
+    const contract = await client.getContractInstance(contractSource, {contractAddress});
+    const calledGet = await contract.call(func, args, {amount: value}).catch(e => console.error(e));
+    return calledGet;
+}
+
 window.addEventListener('load', async () => {
     $("#loader").show();
 
     client = await Ae.Aepp();
 
-    const contract = await client.getContractInstance(contractSource, {contractAddress});
-    const calledGet = await contract.call('getMeetingsLength', [], {callStatic: true}).catch(e => console.error(e));
-    console.log('calledGet', calledGet);
+    meetingsLength = await callStatic('getMeetingsLength', []);
 
-    const decodedGet = await calledGet.decode().catch(e => console.error(e));
-    console.log('decodedGet', decodedGet);
+    for (let i = 1; i <= meetingsLength; i++) {
+        const meeting = await callStatic('getMeeting', [i]);
+
+        meetings.push({
+            id          : i,
+            name        : meeting.name,
+            date        : meeting.date,
+            time        : meeting.time,
+            capacity    : meeting.capacity,
+            ticketPrice : meeting.ticketPrice,
+            address1    : meeting.address1,
+            address2    : meeting.address2,
+            image       : meeting.image,
+            opened      : meeting.opened
+        });
+    }
 
     renderMeetings();
 
@@ -201,22 +226,64 @@ window.addEventListener('load', async () => {
 });
 
 jQuery("#meetingBody").on("click", ".buyBtn", async function(event){
-  const value = $(this).siblings('input').val();
-  const dataIndex = event.target.id;
-  const foundIndex = meetings.findIndex(meeting => meeting.id == dataIndex);
-  meetings[foundIndex].capacity -= parseInt(value, 10);
-  renderMeetings();
+    $('#loader').show();
+    const quantity = $(this).siblings('input').val();
+    const dataIndex = event.target.id;
+    const foundIndex = meetings.findIndex(meeting => meeting.id == dataIndex);
+    const amount = meetings[foundIndex].ticketPrice * quantity;
+
+    await contractCall('buyTicket', [dataIndex], amount);
+
+    renderMeetings();
+    $('#loader').hide();
 });
 
-// $('#createBtn').click(async function(){
-//     var name = ($('#regName').val()),
-//         url = ($('#regUrl').val());
+
+jQuery("#meetingBody").on("click", ".toggleStatus", async function(event){
+    $('#loader').show();
+    const dataIndex = event.target.id;
+    const foundIndex = meetings.findIndex(meeting => meeting.id == dataIndex);
+    const opened = meetings[foundIndex].opened;
+    const capacity = meetings[foundIndex].capacity;
+    
+    if (capacity > 0) {
+        if (!opened)
+            await contractCall('openMeeting', [dataIndex], 0);
+        else
+            await contractCall('closeMeeting', [dataIndex], 0);
+
+        renderMeetings();
+    }
+
+    $('#loader').hide();
+});
+
+$('#createBtn').click(async function(){
+    var name = ($('#regName').val()),
+        date = ($('#regUrl').val()),
+        time = ($('#regName').val()),
+        capacity = ($('#regUrl').val()),
+        ticketPrice = ($('#regName').val()),
+        address1 = ($('#regUrl').val()),
+        address2 = ($('#regName').val()),
+        image = ($('#regUrl').val());
   
-//     memeArray.push({
-//       creatorName: name,
-//       memeUrl: url,
-//       index: memeArray.length+1,
-//       votes: 0
-//     })
-//     renderMemes();
-//   });
+    const args = [ name, date, time, capacity, ticketPrice, address1, address2, image ];
+    await contractSource('createMeeting', args, 0);
+
+    meetings.push({
+        id          : meetings.length+1,
+        name        : name,
+        date        : date,
+        time        : time,
+        capacity    : capacity,
+        ticketPrice : ticketPrice,
+        address1    : address1,
+        address2    : address2,
+        image       : image,
+        opened      : false
+    });
+
+    renderMemes();
+    $('#loader').hide();
+});
