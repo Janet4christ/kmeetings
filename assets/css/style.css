@@ -1,5 +1,15 @@
+html {
+    height: 100%;
+}
+
 body {
-    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.loader {
+    z-index: 100;
 }
 
 .bg-black {
