@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+
+    <title>Kmeeting</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="assets/images/kaadAsset 1xxxhdpi.png" class="logo" alt="kaad solutions logo">Meeting Pay
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="./index.html">Home</a>
+                <a class="nav-item nav-link" href="./create-meeting.html">Create Meeting</a>
+                <a class="nav-item nav-link active" href="./buy-ticket.html">Buy Ticket <span
+                        class="sr-only">(current)</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Compra tu ticket!</h1>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-12 text-center div-center">
+                <div id="meetingBody">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="d-flex fixed-bottom footer justify-content-center py-2">
+        <ul class="p-0 m-0 d-flex">
+            <li>
+                <a class="text-secondary" href="https://twitter.com/bpena">
+                    <i class="fab fa-twitter"></i> <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li>
+                <a class="text-secondary mx-5" href="https://facebook.com/bernardo.pena">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a class="text-secondary" href="https://www.linkedin.com/in/bernardo-pe%C3%B1a/">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <script id="template" type="x-tmpl-mustache">
+        {{#meetings}}
+            <div class="card">
+                <h5 class="card-title">{{name}}</h5>
+                <img class="card-img-top" src="{{image}}" alt="Card image cap">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h6 class="flex-fill text-muted">{{capacity}} tickets available</h6>
+                        <h6>{{ticketPrice}} aettos</h6>
+                    </div>
+                    <input type="number" class="form-control" placeholder="quantity to buy" id={{id}}>
+                    <button class="btn buyBtn btn-primary btn-block mt-1" id={{id}}>Buy</button>
+                </div>
+            </div>
+        {{/meetings}}
+    </script>
+
+    <!-- Optional JavaScript -->
+    <script src="assets/mustache/mustache.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="assets/jquery/jquery-3.3.1.slim.min.js"></script>
+    <script src="assets/popper/popper.min.js"></script>
+    <script src="assets/bootstrap/bootstrap.min.js"></script>
+
+    <script src="assets/js/index.js"></script>
+
+</body>
+
+</html>
