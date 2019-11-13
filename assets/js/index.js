@@ -151,11 +151,15 @@ var meetingsLength = 0;
 console.log('nano');
 
 function renderMeetings() {
-    // meetings = meetings.sort(function(a,b){return b.date-a.date})
-    var template = $('#template').html();
-    Mustache.parse(template);
-    var rendered = Mustache.render(template, {meetings});
-    $('#meetingBody').html(rendered);
+    if (Mustache) {
+        // meetings = meetings.sort(function(a,b){return b.date-a.date})
+        var template = $('#template').html();
+        if (template) {
+            Mustache.parse(template);
+            var rendered = Mustache.render(template, {meetings});
+            $('#meetingBody').html(rendered);
+        }
+    }
 }
 
 async function callStatic(func, args) {
