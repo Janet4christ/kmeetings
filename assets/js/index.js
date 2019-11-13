@@ -259,7 +259,7 @@ $('#createBtn').click(async function(){
         image = ($('#image').val());
   
     const args = [ name, date, time, capacity, ticketPrice, address1, address2, image ];
-    await contractSource('createMeeting', args, 0);
+    await contractCall('createMeeting', args, 0);
 
     meetings.push({
         id          : meetings.length+1,
