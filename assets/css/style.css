@@ -12,6 +12,10 @@ body {
     z-index: 100;
 }
 
+.loader {
+    z-index: 100;
+}
+
 .bg-black {
     background-color: black;
 }
