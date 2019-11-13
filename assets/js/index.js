@@ -56,9 +56,9 @@ payable contract Meeting =
   /**
    * create meeting    
    */
-  stateful entrypoint createMeeting(meetingId: int, name': string, date': string,
-                                    time': string, capacity': int, ticketPrice': int,
-                                    image': string, address1': string, address2': string) =
+  stateful entrypoint createMeeting(name': string, date': string, time': string,
+                                    capacity': int, ticketPrice': int, image': string,
+                                    address1': string, address2': string) =
     // 1, primer meetup, hoy, ahora, 12, 1, imagen, direccion 1, direccion 2d
     // 2, segundo meetup, manana, despues, 23, 2, imagen, dir1, dir2
     // meeting values
@@ -73,8 +73,12 @@ payable contract Meeting =
         address2 = address2', 
         opened = false,
         tickets = {} }
+        
+    let meetingId = getMeetingsLength()
+    let newLength = meetingId + 1
+    
     // save meeting in blockchain
-    put(state{ meetings[meetingId] = meeting })
+    put(state{ meetings[meetingId] = meeting, meetingsLength = newLength })
     
   
   
@@ -142,8 +146,8 @@ payable contract Meeting =
     let meeting = getMeeting(meetingId)
     let updatedMeetings = state.meetings{ [meetingId].opened = false }
     put(state{ meetings = updatedMeetings })`;
-
-const contractAddress = 'ct_nK62JyqR4ariZHrKpJ2VK85fWHHWUYQU5DiMT3kRdzf21Azou';
+    
+const contractAddress = 'ct_2toZ4nu6ZLfw6vPWFoSHfM7mpQkwiEyza7H6VMs4rDgDxbZ1Ci';
 var client = null;
 var meetings = [];
 var meetingsLength = 0;
@@ -258,22 +262,8 @@ $('#createBtn').click(async function(){
         address2 = ($('#address2').val()),
         image = ($('#image').val());
   
-    const args = [ name, date, time, capacity, ticketPrice, address1, address2, image ];
+    const args = [ name, date, time, capacity, ticketPrice, image, address1, address2 ];
     await contractCall('createMeeting', args, 0);
 
-    meetings.push({
-        id          : meetings.length+1,
-        name        : name,
-        date        : date,
-        time        : time,
-        capacity    : capacity,
-        ticketPrice : ticketPrice,
-        address1    : address1,
-        address2    : address2,
-        image       : image,
-        opened      : false
-    });
-
-    renderMemes();
     hideLoader();
 });

@@ -55,9 +55,9 @@ payable contract Meeting =
   /**
    * create meeting    
    */
-  stateful entrypoint createMeeting(meetingId: int, name': string, date': string,
-                                    time': string, capacity': int, ticketPrice': int,
-                                    image': string, address1': string, address2': string) =
+  stateful entrypoint createMeeting(name': string, date': string, time': string,
+                                    capacity': int, ticketPrice': int, image': string,
+                                    address1': string, address2': string) =
     // 1, primer meetup, hoy, ahora, 12, 1, imagen, direccion 1, direccion 2d
     // 2, segundo meetup, manana, despues, 23, 2, imagen, dir1, dir2
     // meeting values
@@ -72,8 +72,12 @@ payable contract Meeting =
         address2 = address2', 
         opened = false,
         tickets = {} }
+        
+    let meetingId = getMeetingsLength()
+    let newLength = meetingId + 1
+    
     // save meeting in blockchain
-    put(state{ meetings[meetingId] = meeting })
+    put(state{ meetings[meetingId] = meeting, meetingsLength = newLength })
     
   
   
