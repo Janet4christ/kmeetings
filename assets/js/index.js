@@ -242,7 +242,7 @@ jQuery("#meetingBody").on("click", ".btnUpdate", async function(event){
     
     await contractCall('updateImage', [dataIndex, image], 0);
     
-    updateMeeting(foundIndex, dataIndex);
+    await updateMeeting(foundIndex, dataIndex);
 
     renderMeetings();
     hideLoader();
