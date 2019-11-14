@@ -228,10 +228,10 @@ window.addEventListener('load', async () => {
 
 jQuery("#meetingBody").on("click", ".btnUpdate", async function(event){
     showLoader();
-    const image = $(this).siblings('input').val();
+    const image = $('#image').val();
     const dataIndex = event.target.id;
     
-    await contractCall('updateImage', [dataIndex], amount);
+    await contractCall('updateImage', [dataIndex, image], 0);
 
     renderMeetings();
     hideLoader();
