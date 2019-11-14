@@ -89,6 +89,29 @@
         </div>
     </div>
 
+
+
+    <div class="main flex-fill position-relative overflow-auto">
+        <div id="loader"
+            class="align-items-center bg-light d-flex flex-column h-100 justify-content-center position-absolute w-100 loader">
+            <h4 class="mb-2">Loading</h2>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+        </div>
+
+        <div id="main-content" class="container mb-5 flex-column">
+            <h1>Meetings!</h1>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-12 text-center div-center">
+                    <div id="meetingBody">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- footer -->
     <div class="d-flex fixed-bottom footer justify-content-center py-2">
         <ul class="p-0 m-0 d-flex">
@@ -110,11 +133,33 @@
         </ul>
     </div>
 
+    <script id="template" type="x-tmpl-mustache">
+        {{#meetings}}
+            <div class="card">
+                <h5 class="card-title">{{name}}</h5>
+                <img class="card-img-top" src="{{image}}" alt="Card image cap">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h6 class="flex-fill text-muted">{{capacity}} tickets available</h6>
+                        <h6>{{ticketPrice}} aettos</h6>
+                    </div>
+                    <input type="number" class="form-control" placeholder="quantity to buy" id={{id}}>
+                    <button class="btn buyBtn btn-primary btn-block mt-1" id={{id}}>Buy</button>
+                </div>
+            </div>
+        {{/meetings}}
+    </script>
+
     <!-- Optional JavaScript -->
+    <script src="assets/mustache/mustache.js"></script>
+    <script src="https://unpkg.com/@aeternity/aepp-sdk/dist/aepp-sdk.browser-script.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="assets/jquery/jquery-3.3.1.slim.min.js"></script>
     <script src="assets/popper/popper.min.js"></script>
     <script src="assets/bootstrap/bootstrap.min.js"></script>
+
+    <script src="assets/js/index.js"></script>
+
 </body>
 
 </html>
