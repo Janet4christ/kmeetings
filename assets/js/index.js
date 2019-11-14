@@ -187,6 +187,11 @@ async function contractCall(func, args, value) {
     return calledGet;
 }
 
+async function updateMeeting(meetingPosition, meetingId) {
+  const meeting = await callStatic('getMeeting', [meetingId]);
+  meetings[meetingPosition] = meeting;
+}
+
 function showLoader() {
     $('#loader').addClass('d-flex');
     $('#loader').removeClass('d-none');
@@ -226,17 +231,26 @@ window.addEventListener('load', async () => {
     hideLoader();
 });
 
+/**
+ * update meeting image
+ */
 jQuery("#meetingBody").on("click", ".btnUpdate", async function(event){
     showLoader();
     const image = $('#image').val();
     const dataIndex = event.target.id;
+    const foundIndex = meetings.findIndex(meeting => meeting.id == dataIndex);
     
     await contractCall('updateImage', [dataIndex, image], 0);
+    
+    updateMeeting(foundIndex, dataIndex);
 
     renderMeetings();
     hideLoader();
 });
 
+/**
+ * buy tickets
+ */
 jQuery("#meetingBody").on("click", ".buyBtn", async function(event){
     showLoader();
     const quantity = $(this).siblings('input').val();
@@ -244,13 +258,18 @@ jQuery("#meetingBody").on("click", ".buyBtn", async function(event){
     const foundIndex = meetings.findIndex(meeting => meeting.id == dataIndex);
     const amount = meetings[foundIndex].ticketPrice * quantity;
 
-    await contractCall('buyTicket', [dataIndex], amount);
+    if (quantity <= meetings[foundIndex].capacity) {
+      await contractCall('buyTicket', [dataIndex, quantity], amount);
+      await updateMeeting(foundIndex, dataIndex);
+    }
 
     renderMeetings();
     hideLoader();
 });
 
-
+/**
+ * toggle status
+ */
 jQuery("#meetingBody").on("click", ".toggleStatus", async function(event){
     showLoader();
     const dataIndex = event.target.id;
@@ -264,12 +283,16 @@ jQuery("#meetingBody").on("click", ".toggleStatus", async function(event){
         else
             await contractCall('closeMeeting', [dataIndex], 0);
 
+        await updateMeeting(foundIndex, dataIndex);
         renderMeetings();
     }
 
     hideLoader();
 });
 
+/**
+ * create meeting
+ */
 $('#createBtn').click(async function(){
     showLoader();
     var name = ($('#name').val()),
