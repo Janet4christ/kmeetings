@@ -189,7 +189,23 @@ async function contractCall(func, args, value) {
 
 async function updateMeeting(meetingPosition, meetingId) {
   const meeting = await callStatic('getMeeting', [meetingId]);
-  meetings[meetingPosition] = meeting;
+  meetings[meetingPosition] = parseMeeting(meeting, meetingPosition);
+}
+
+function parseMeeting(meeting, index) {
+  return {
+    id          : index,
+    name        : meeting.name,
+    date        : meeting.date,
+    time        : meeting.time,
+    capacity    : meeting.capacity,
+    ticketPrice : meeting.ticketPrice,
+    address1    : meeting.address1,
+    address2    : meeting.address2,
+    image       : meeting.image,
+    opened      : meeting.opened,
+    statusAction: meeting.opened ? 'Close' : 'Open'
+  };
 }
 
 function showLoader() {
@@ -212,18 +228,7 @@ window.addEventListener('load', async () => {
     for (let i = 0; i < meetingsLength; i++) {
         const meeting = await callStatic('getMeeting', [i]);
 
-        meetings.push({
-            id          : i,
-            name        : meeting.name,
-            date        : meeting.date,
-            time        : meeting.time,
-            capacity    : meeting.capacity,
-            ticketPrice : meeting.ticketPrice,
-            address1    : meeting.address1,
-            address2    : meeting.address2,
-            image       : meeting.image,
-            opened      : meeting.opened
-        });
+        meetings.push(parseMeeting(meeting, i));
     }
 
     renderMeetings();
