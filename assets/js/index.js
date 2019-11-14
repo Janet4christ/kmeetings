@@ -211,11 +211,15 @@ function parseMeeting(meeting, index) {
 function showLoader() {
     $('#loader').addClass('d-flex');
     $('#loader').removeClass('d-none');
+    $('#main-content').addClass('d-none');
+    $('#main-content').removeClass('d-flex');
 }
 
 function hideLoader() {
     $('#loader').removeClass('d-flex');
     $('#loader').addClass('d-none');
+    $('#main-content').addClass('d-flex');
+    $('#main-content').removeClass('d-none');
 }
 
 window.addEventListener('load', async () => {
