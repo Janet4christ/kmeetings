@@ -1,4 +1,5 @@
 const contractSource = `
+
 payable contract Meeting =
   // ticket definition
   record ticket = 
@@ -27,7 +28,7 @@ payable contract Meeting =
       meetingsLength : int }
 
 
-  // 1, primer meetup, hoy, ahora, 12, 1, imagen, direccion 1, direccion 2d
+  // primer meetup, hoy, ahora, 12, 1, imagen, direccion 1, direccion 2d
   // 2, segundo meetup, manana, despues, 23, 2, imagen, dir1, dir2
 
   
@@ -131,8 +132,7 @@ payable contract Meeting =
    */
   stateful entrypoint updateImage(meetingId: int, image': string) =
     let meeting = getMeeting(meetingId)
-    let updatedMeeting = meeting{ image = image' }
-    let updatedMeetings = state.meetings{ [meetingId] = updatedMeeting }
+    let updatedMeetings = state.meetings{ [meetingId].image = image' }
     put(state{ meetings = updatedMeetings })
    
    
@@ -155,7 +155,7 @@ payable contract Meeting =
     let updatedMeetings = state.meetings{ [meetingId].opened = false }
     put(state{ meetings = updatedMeetings })`;
     
-const contractAddress = 'ct_2toZ4nu6ZLfw6vPWFoSHfM7mpQkwiEyza7H6VMs4rDgDxbZ1Ci';
+const contractAddress = 'ct_cpiynT1cfQRoKQnNXQN98kZ9qbX6twhAzgiEFHLcffYkQ4vvi';
 var client = null;
 var meetings = [];
 var meetingsLength = 0;
