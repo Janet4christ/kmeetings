@@ -27,65 +27,32 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="./index.html">Home</a>
-                <a class="nav-item nav-link" href="./buy-ticket.html">Buy Ticket</a>
-                <a class="nav-item nav-link active" href="./create-meeting.html">Create Meeting <span
+                <a class="nav-item nav-link active" href="./buy-ticket.html">Buy Ticket</a>
+                <a class="nav-item nav-link" href="./create-meeting.html">Create Meeting</a>
+                <a class="nav-item nav-link active" href="./manage-meeting.html">Manage Meeting<span
                         class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="./manage-meeting.html">Manage Meeting</a>
             </div>
         </div>
     </nav>
+
     <div class="main flex-fill position-relative overflow-auto">
         <div id="loader"
-            class="align-items-center bg-light d-flex flex-column h-100 justify-content-center position-absolute w-100 loader">
+            class="align-items-center bg-light d-none flex-column h-100 justify-content-center position-absolute w-100 loader">
             <h4 class="mb-2">Loading</h2>
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
         </div>
-        <div class="container mb-5">
-            <h1>New Meeting!</h1>
 
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Meeting Name">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="date">Date</label>
-                        <input type="date" class="form-control" id="date" placeholder="Date">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="time">Time</label>
-                        <input type="time" class="form-control" id="time" placeholder="16:00">
+        <div class="container mb-5">
+            <h3>Meetings!</h3>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-12 text-center div-center">
+                    <div id="meetingBody">
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="capacity">Capacity</label>
-                        <input type="number" class="form-control" id="capacity" placeholder="0">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="ticketPrice">Ticket price</label>
-                        <input type="number" class="form-control" id="ticketPrice" placeholder="0 aettos">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="image">Image</label>
-                        <input type="string" class="form-control" id="image" placeholder="http://image.url">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="address1">Address</label>
-                        <input type="text" class="form-control" id="address1" placeholder="1234 Main St">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="address2">Address 2</label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor">
-                    </div>
-                </div>
-                <button type="submit" id="createBtn" class="btn btn-primary btn-block">Save</button>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -110,15 +77,40 @@
         </ul>
     </div>
 
+
+    <script id="template" type="x-tmpl-mustache">
+        {{#meetings}}
+            <div class="card">
+                <h5 class="card-title">{{name}}</h5>
+                <img class="card-img-top" src="{{image}}" alt="Card image cap">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h6 class="flex-fill text-muted">{{capacity}} tickets available</h6>
+                        <h6>{{ticketPrice}} aettos</h6>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="image.url" value="{{image}}"
+                            aria-label="image" aria-describedby="btnUpdate">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button"
+                                id="btnUpdate">update</button>
+                        </div>
+                    </div>
+                    <button class="btn toggleStatus btn-primary btn-block mt-1" id={{id}}>Open</button>
+                </div>
+            </div>
+        {{/meetings}}
+    </script>
+
     <!-- Optional JavaScript -->
     <script src="assets/mustache/mustache.js"></script>
-    <script src="https://unpkg.com/@aeternity/aepp-sdk/dist/aepp-sdk.browser-script.js"></script>
+    <!-- <script src="https://unpkg.com/@aeternity/aepp-sdk/dist/aepp-sdk.browser-script.js"></script> -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="assets/jquery/jquery-3.3.1.slim.min.js"></script>
     <script src="assets/popper/popper.min.js"></script>
     <script src="assets/bootstrap/bootstrap.min.js"></script>
 
-    <script src="assets/js/index.js"></script>
+    <!-- <script src="assets/js/index.js"></script> -->
 
 </body>
 

@@ -125,7 +125,15 @@ payable contract Meeting =
     put(state{ meetings = updatedMeetings })
 
    
-   
+  
+  /**
+   * update image
+   */
+  stateful entrypoint updateImage(meetingId: int, image': string) =
+    let meeting = getMeeting(meetingId)
+    let updatedMeeting = meeting{ image = image' }
+    let updatedMeetings = state.meetings{ [meetingId] = updatedMeeting }
+    put(state{ meetings = updatedMeetings })
    
    
   /**
@@ -215,6 +223,17 @@ window.addEventListener('load', async () => {
 
     renderMeetings();
 
+    hideLoader();
+});
+
+jQuery("#meetingBody").on("click", ".btnUpdate", async function(event){
+    showLoader();
+    const image = $(this).siblings('input').val();
+    const dataIndex = event.target.id;
+    
+    await contractCall('updateImage', [dataIndex], amount);
+
+    renderMeetings();
     hideLoader();
 });
 
