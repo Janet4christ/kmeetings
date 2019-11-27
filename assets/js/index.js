@@ -10,7 +10,8 @@ payable contract Meeting =
   
   // meeting definition
   record meeting =
-    { name        : string,
+    { creatorAddress: address,
+      name        : string,
       date        : string,
       time        : string,
       capacity    : int,
@@ -64,7 +65,8 @@ payable contract Meeting =
     // 2, segundo meetup, manana, despues, 23, 2, imagen, dir1, dir2
     // meeting values
     let meeting = 
-      { name = name',
+      { creatorAddress = Call.caller,
+        name = name',
         date = date', 
         time = time', 
         capacity = capacity', 
@@ -116,6 +118,8 @@ payable contract Meeting =
       { owner = Call.caller,
         quantity = ownTicketQty + quantity' }
         
+    Chain.spend(meeting.creatorAddress, Call.value)
+        
     let updatedTickets = tickets{ [Call.caller] = ticket }
     
     let updatedMeeting = meeting{ tickets = updatedTickets, capacity = updatedCapacity, opened = updatedStatus }
@@ -155,7 +159,7 @@ payable contract Meeting =
     let updatedMeetings = state.meetings{ [meetingId].opened = false }
     put(state{ meetings = updatedMeetings })`;
     
-const contractAddress = 'ct_cpiynT1cfQRoKQnNXQN98kZ9qbX6twhAzgiEFHLcffYkQ4vvi';
+const contractAddress = 'ct_22kwNCS9VmzRCcmjCU5189w42uKNerd5Fh9JGLFxsP8svCDUbF';
 var client = null;
 var meetings = [];
 var meetingsLength = 0;
